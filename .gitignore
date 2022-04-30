@@ -12,3 +12,4 @@ Bin/
 obj/
 Obj/
 *.DotSettings.user
+*.DS_Store

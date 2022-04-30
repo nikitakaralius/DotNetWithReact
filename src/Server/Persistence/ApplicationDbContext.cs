@@ -26,9 +26,6 @@ internal sealed class ApplicationDbContext : DbContext
             .HasData(PostsToSeed());
     }
     
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) => 
-        optionsBuilder.UseSqlite("Data Source=./Persistence/ApplicationDB.db");
-    
     private static Post[] PostsToSeed()
     {
         var posts = new Post[6];
