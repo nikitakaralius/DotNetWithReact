@@ -1,3 +1,5 @@
+using static Microsoft.AspNetCore.Http.Results;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddApplication(builder.Configuration);
@@ -12,14 +14,18 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.MapGet("/posts", async (IPostsRepository repository) => await repository.AllPostsAsync());
+app.MapGet("/posts", async (IPostsRepository repository) =>
+{
+    var posts = await repository.AllPostsAsync();
+    return posts.Select(p => p.AsPostToRead());
+});
 
 app.MapGet("/posts/{id:int}", async (IPostsRepository repository, int id) =>
    {
        var post = await repository.PostByIdAsync(id);
        return post is not null
-           ? Results.Ok(post)
-           : Results.NotFound();
+           ? Ok(post.AsPostToRead())
+           : NotFound();
    })
    .Produces(200)
    .Produces(404);

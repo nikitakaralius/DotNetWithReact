@@ -1,6 +1,6 @@
-namespace Server.Models;
+namespace Server.Models.External;
 
-internal sealed class Post
+internal sealed class PostToRead
 {
     public int Id { get; init; }
 

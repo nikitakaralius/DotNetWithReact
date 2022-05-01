@@ -1,6 +1,3 @@
-using Microsoft.EntityFrameworkCore;
-using Server.Models;
-
 namespace Server.Persistence;
 
 internal sealed class ApplicationDbContext : DbContext
