@@ -9,8 +9,8 @@ var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI();
 
-
 app.UseHttpsRedirection();
+app.UseCors("FrontendPolicy");
 
 app.MapGet("/get-all-posts", async (IPostsRepository repository) =>
 {
