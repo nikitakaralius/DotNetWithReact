@@ -7,4 +7,6 @@ internal sealed class PostsRepository : IPostsRepository
     public PostsRepository(ApplicationDbContext db) => _db = db;
 
     public Task<List<Post>> AllPostsAsync() => _db.Posts.ToListAsync();
+    
+    public Task<Post?> PostByIdAsync(int id) => _db.Posts.FirstOrDefaultAsync(p => p.Id == id);
 }

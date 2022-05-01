@@ -12,6 +12,16 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.MapGet("/posts", (IPostsRepository repository) => repository.AllPostsAsync());
+app.MapGet("/posts", async (IPostsRepository repository) => await repository.AllPostsAsync());
+
+app.MapGet("/posts/{id:int}", async (IPostsRepository repository, int id) =>
+   {
+       var post = await repository.PostByIdAsync(id);
+       return post is not null
+           ? Results.Ok(post)
+           : Results.NotFound();
+   })
+   .Produces(200)
+   .Produces(404);
 
 app.Run();
