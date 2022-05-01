@@ -1,12 +1,6 @@
-using Microsoft.EntityFrameworkCore;
-using Server.Extensions;
-
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<ApplicationDbContext>(
-    o => o.UseSqlServer(builder.Configuration.DatabaseConnection()));
+builder.Services.AddApplication(builder.Configuration);
 
 var app = builder.Build();
 
@@ -17,5 +11,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.MapGet("/posts", (IPostsRepository repository) => repository.AllPostsAsync());
 
 app.Run();
