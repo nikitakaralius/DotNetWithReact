@@ -27,7 +27,19 @@ app.MapGet("/posts/{id:int}", async (IPostsRepository repository, int id) =>
            ? Ok(post.AsPostToRead())
            : NotFound();
    })
+   .WithName("postById")
    .Produces(200)
    .Produces(404);
+
+app.MapPost("/posts", async (IPostsRepository repository, PostToCreate postToCreate) =>
+   {
+       var post = postToCreate.AsPost();
+       await repository.CreatePostAsync(post);
+       await repository.SaveChangesAsync();
+       var postToRead = post.AsPostToRead();
+       return CreatedAtRoute("postById", new {id = postToRead.Id}, postToRead);
+   })
+   .Produces(201)
+   .Produces(400);
 
 app.Run();

@@ -6,7 +6,11 @@ internal sealed class PostsRepository : IPostsRepository
 
     public PostsRepository(ApplicationDbContext db) => _db = db;
 
-    public Task<List<Post>> AllPostsAsync() => _db.Posts.ToListAsync();
+    public async Task<List<Post>> AllPostsAsync() => await _db.Posts.ToListAsync();
+
+    public async Task<Post?> PostByIdAsync(int id) => await _db.Posts.FirstOrDefaultAsync(p => p.Id == id);
+
+    public async Task CreatePostAsync(Post post) => await _db.Posts.AddAsync(post);
     
-    public Task<Post?> PostByIdAsync(int id) => _db.Posts.FirstOrDefaultAsync(p => p.Id == id);
+    public async Task SaveChangesAsync() => await _db.SaveChangesAsync();
 }
