@@ -19,4 +19,12 @@ internal static class PostMappings
             Title = post.Title,
             Content = post.Content
         };
+
+    public static Post AsPost(this PostToRead post) =>
+        new()
+        {
+            Id = post.Id,
+            Title = post.Title,
+            Content = post.Content
+        };
 }

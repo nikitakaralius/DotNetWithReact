@@ -11,10 +11,11 @@ internal sealed class PostsRepository : IPostsRepository
     public async Task<Post?> PostByIdAsync(int id) => await _db.Posts.FirstOrDefaultAsync(p => p.Id == id);
 
     public async Task CreatePostAsync(Post post) => await _db.Posts.AddAsync(post);
+    public void UpdatePost(Post post) => _db.Posts.Update(post);
 
     public async Task DeletePostByIdAsync(int id)
     {
-        var post = await _db.Posts.FirstOrDefaultAsync(p => p.Id == id);
+        var post = await PostByIdAsync(id);
         if (post is null)
             return;
         _db.Posts.Remove(post);

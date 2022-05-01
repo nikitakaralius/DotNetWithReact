@@ -42,6 +42,14 @@ app.MapPost("/posts", async (IPostsRepository repository, PostToCreate postToCre
    .Produces(201)
    .Produces(400);
 
+app.MapPut("/posts", async (IPostsRepository postsRepository, PostToRead postToRead) =>
+   {
+       postsRepository.UpdatePost(postToRead.AsPost());
+       await postsRepository.SaveChangesAsync();
+       return NoContent();
+   })
+   .Produces(204);
+
 app.MapDelete("/posts/{id:int}", async (IPostsRepository repository, int id) =>
    {
        await repository.DeletePostByIdAsync(id);
