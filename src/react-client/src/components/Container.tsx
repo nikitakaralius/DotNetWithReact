@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface ContainerProps {
-  children: React.ReactNode
+  children: React.ReactNode;
 }
 
 export const Container: React.FC<ContainerProps> = ({children}) => {
@@ -13,5 +13,5 @@ export const Container: React.FC<ContainerProps> = ({children}) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
