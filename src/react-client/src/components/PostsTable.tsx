@@ -1,31 +1,25 @@
 import React from 'react';
+import {IPost} from '../interfaces';
+import {Post} from './Post';
 
-export const PostsTable: React.FC = () => {
+interface IPostTableProps {
+  posts: IPost[];
+}
+
+export const PostsTable: React.FC<IPostTableProps> = ({posts}) => {
   return (
     <div className="table-responsive mt-5">
-      <table className="table table-bordered border-dark">
+      <table className="table table-striped table-bordered border-light">
         <thead>
         <tr>
-          <th scope="col">Post Id</th>
-          <th scope="col">Titgle</th>
-          <th scope="col">Content</th>
-          <th scope="col">CRUD Operations</th>
+          <th scope="col" className="text-center">Post Id</th>
+          <th scope="col" className="text-center">Title</th>
+          <th scope="col" className="text-center">Content</th>
+          <th scope="col" className="text-center">CRUD Operations</th>
         </tr>
         </thead>
         <tbody>
-        <tr>
-          <th scope="row">1</th>
-          <td>Post 1 Title</td>
-          <td>Post 1 Content</td>
-          <td>
-            <button className="btn btn-dark btn-lg mx-3 my-3">
-              Update
-            </button>
-            <button className="btn btn-secondary btn-lg">
-              Delete
-            </button>
-          </td>
-        </tr>
+        {posts.map(post => <Post post={post}/>)}
         </tbody>
       </table>
     </div>

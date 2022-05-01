@@ -3,6 +3,7 @@ import {IPost} from './interfaces';
 import {PostsTable} from './components/PostsTable';
 import {Container} from './components/Container';
 import {getAllPosts} from './backend/PostService';
+import {Header} from './components/Header';
 
 export const App: React.FC = () => {
   const [posts, setPosts] = useState<IPost[]>([]);
@@ -14,7 +15,8 @@ export const App: React.FC = () => {
 
   return (
     <Container>
-      <PostsTable/>
+      <Header/>
+      <PostsTable posts={posts}/>
     </Container>
   );
 };
