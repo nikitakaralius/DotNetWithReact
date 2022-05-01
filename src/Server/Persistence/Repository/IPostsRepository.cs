@@ -8,5 +8,7 @@ internal interface IPostsRepository
 
     Task CreatePostAsync(Post post);
 
+    Task DeletePostByIdAsync(int id);
+
     Task SaveChangesAsync();
 }
