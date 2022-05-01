@@ -1,9 +1,11 @@
 import React from 'react';
+import {PostsTable} from './components/PostsTable';
+import {Container} from './components/Container';
 
 export const App: React.FC = () => {
   return (
-    <div>
-      Hello, World!
-    </div>
+    <Container>
+      <PostsTable />
+    </Container>
   );
-}
+};
