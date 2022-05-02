@@ -12,10 +12,10 @@ export const Post: React.FC<IPostProps> = ({post}) => {
       <td>{post.title}</td>
       <td>{post.content}</td>
       <td>
-        <button className="btn btn-dark btn-lg mx-3 my-3">
+        <button className="btn btn-success btn-lg mx-3 my-3">
           Update
         </button>
-        <button className="btn btn-secondary btn-lg">
+        <button className="btn btn-danger btn-lg">
           Delete
         </button>
       </td>
