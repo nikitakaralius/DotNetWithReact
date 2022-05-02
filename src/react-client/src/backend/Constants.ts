@@ -1,6 +1,8 @@
 const API_URL_DEVELOPMENT = 'https://localhost:7288';
 const API_URL_PRODUCTION = 'undefined';
 
+type Environment = 'Development' | 'Production'
+
 interface IEndpoints {
   getAllPosts: string;
   getPostById: string;
@@ -17,20 +19,20 @@ const endpoints: IEndpoints = {
   deletePostById: 'delete-post-by-id'
 };
 
-const development: IEndpoints = {
-  getAllPosts: `${API_URL_DEVELOPMENT}/${endpoints.getAllPosts}`,
-  getPostById: `${API_URL_DEVELOPMENT}/${endpoints.getPostById}`,
-  createPost: `${API_URL_DEVELOPMENT}/${endpoints.createPost}`,
-  updatePost: `${API_URL_DEVELOPMENT}/${endpoints.updatePost}`,
-  deletePostById: `${API_URL_DEVELOPMENT}/${endpoints.deletePostById}`
+const endpointsFor = (environment: Environment): IEndpoints => {
+  const url = environment == 'Development' ? API_URL_DEVELOPMENT : API_URL_PRODUCTION;
+
+  return {
+    getAllPosts: `${url}/${endpoints.getAllPosts}`,
+    getPostById: `${url}/${endpoints.getPostById}`,
+    createPost: `${url}/${endpoints.createPost}`,
+    updatePost: `${url}/${endpoints.updatePost}`,
+    deletePostById: `${url}/${endpoints.deletePostById}`
+  };
 };
 
-const production: IEndpoints = {
-  getAllPosts: `${API_URL_PRODUCTION}/${endpoints.getAllPosts}`,
-  getPostById: `${API_URL_PRODUCTION}/${endpoints.getPostById}`,
-  createPost: `${API_URL_PRODUCTION}/${endpoints.createPost}`,
-  updatePost: `${API_URL_PRODUCTION}/${endpoints.updatePost}`,
-  deletePostById: `${API_URL_PRODUCTION}/${endpoints.deletePostById}`
-};
+const development = endpointsFor('Development');
+
+const production = endpointsFor('Production');
 
 export const Constants = process.env.NODE_ENV === 'development' ? development : production;
