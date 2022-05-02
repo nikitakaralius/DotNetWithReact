@@ -18,12 +18,22 @@ export const CreatePostModal: React.FC<ICreatePostModalProps> = ({shown, onHide,
   };
 
   const [post, setPost] = useState<IPost>(defaultPost);
+  const [postValid, setPostValid] = useState(true);
+  
+  const validate = (post: IPost) => {
+    return post.title.length > 0 && post.content.length > 0;
+  };
 
   const createPost = () => {
+    if (!validate(post)) {
+      setPostValid(false)
+      return;
+    }
     PostService
       .createPost(post)
-      .then(_ => onCreate())
+      .then(_ => onCreate());
     setPost(defaultPost);
+    setPostValid(true)
     onHide();
   };
 
@@ -33,7 +43,7 @@ export const CreatePostModal: React.FC<ICreatePostModalProps> = ({shown, onHide,
         <Modal.Title>Describe your post</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <CreatePostForm post={post} setPost={setPost}/>
+        <CreatePostForm post={post} setPost={setPost} passedValidation={postValid}/>
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={onHide}>
