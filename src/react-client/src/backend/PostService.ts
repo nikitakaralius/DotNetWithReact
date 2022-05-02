@@ -13,4 +13,9 @@ export namespace PostService {
     const url = Constants.createPost;
     return await axios.post(url, post);
   };
+  
+  export const deletePost = async (postId: number) => {
+    const url = `${Constants.deletePostById}/${postId}`
+    return await axios.delete(url)
+  }
 }

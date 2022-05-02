@@ -3,9 +3,10 @@ import {IPost} from '../interfaces';
 
 interface IPostProps {
   post: IPost;
+  onDelete: (post: IPost) => void;
 }
 
-export const Post: React.FC<IPostProps> = ({post}) => {
+export const Post: React.FC<IPostProps> = ({post, onDelete}) => {
   return (
     <tr key={post.id}>
       <th scope="row">{post.id}</th>
@@ -15,7 +16,7 @@ export const Post: React.FC<IPostProps> = ({post}) => {
         <button className="btn btn-success btn-lg mx-3 my-3">
           Update
         </button>
-        <button className="btn btn-danger btn-lg">
+        <button className="btn btn-danger btn-lg" onClick={() => onDelete(post)}>
           Delete
         </button>
       </td>

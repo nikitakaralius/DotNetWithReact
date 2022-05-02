@@ -17,12 +17,18 @@ export const App: React.FC = () => {
     PostService.getAllPosts()
       .then(postsFromServer => setPosts(postsFromServer));
   };
+  
+  const deletePost = (post: IPost) => {
+    PostService
+      .deletePost(post.id)
+      .then(() => fetchPosts())
+  }
 
   return (
     <Container>
       <Menu onGetPostsClick={fetchPosts} onCreatePostClick={showModal}/>
       <CreatePostModal shown={modalShown} onHide={hideModal} onCreate={fetchPosts}/>
-      <PostsTable posts={posts}/>
+      <PostsTable posts={posts} onDeletePost={deletePost}/>
     </Container>
   );
 };

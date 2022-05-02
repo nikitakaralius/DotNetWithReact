@@ -4,9 +4,10 @@ import {Post} from './Post';
 
 interface IPostTableProps {
   posts: IPost[];
+  onDeletePost: (post: IPost) => void;
 }
 
-export const PostsTable: React.FC<IPostTableProps> = ({posts}) => {
+export const PostsTable: React.FC<IPostTableProps> = ({posts, onDeletePost}) => {
   
   const table = () => {
     return (
@@ -20,7 +21,7 @@ export const PostsTable: React.FC<IPostTableProps> = ({posts}) => {
           </tr>
           </thead>
           <tbody>
-          {posts.map(post => <Post post={post}/>)}
+          {posts.map(post => <Post post={post} onDelete={onDeletePost}/>)}
           </tbody>
         </table>
     )
