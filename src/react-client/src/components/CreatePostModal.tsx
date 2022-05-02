@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Button, Modal} from 'react-bootstrap';
-import {CreatePostForm} from './CreatePostForm';
+import {PostForm} from './PostForm';
 import {IPost} from '../interfaces';
 import {PostService} from '../backend/PostService';
 
@@ -11,29 +11,43 @@ interface ICreatePostModalProps {
 }
 
 export const CreatePostModal: React.FC<ICreatePostModalProps> = ({shown, onHide, onCreate}) => {
-  const defaultPost: IPost = {
+  const emptyPost: IPost = {
     id: 0,
     title: '',
     content: ''
   };
 
-  const [post, setPost] = useState<IPost>(defaultPost);
-  const [postValid, setPostValid] = useState(true);
+  const [post, setPost] = useState<IPost>(emptyPost);
+  const [titleValid, setTitleValid] = useState(true);
+  const [contentValid, setContentValid] = useState(true);
   
-  const validate = (post: IPost) => {
-    return post.title.length > 0 && post.content.length > 0;
-  };
-
+  useEffect(() => {
+    if (titleValid) {
+      return
+    }
+    setTitleValid(post.title.length !== 0);
+  }, [post.title])
+  
+  useEffect(() => {
+    if (contentValid) {
+      return
+    }
+    setContentValid(post.content.length !== 0);
+  }, [post.content])
+  
   const createPost = () => {
-    if (!validate(post)) {
-      setPostValid(false)
+    
+    setTitleValid(post.title.length !== 0);
+    setContentValid(post.content.length !== 0);
+    
+    if (post.title.length === 0 || post.content.length === 0) {
       return;
     }
+    
     PostService
       .createPost(post)
       .then(_ => onCreate());
-    setPost(defaultPost);
-    setPostValid(true)
+    setPost(emptyPost);
     onHide();
   };
 
@@ -43,7 +57,12 @@ export const CreatePostModal: React.FC<ICreatePostModalProps> = ({shown, onHide,
         <Modal.Title>Describe your post</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <CreatePostForm post={post} setPost={setPost} passedValidation={postValid}/>
+        <PostForm
+          post={post}
+          setPost={setPost}
+          titleValid={titleValid}
+          contentValid={contentValid}
+        />
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={onHide}>

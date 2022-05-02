@@ -5,10 +5,11 @@ import {IPost} from '../interfaces';
 interface ICreatePostFormProps {
   post: IPost;
   setPost: (post: IPost) => void;
-  passedValidation: boolean;
+  titleValid: boolean;
+  contentValid: boolean;
 }
 
-export const CreatePostForm: React.FC<ICreatePostFormProps> = ({post, setPost, passedValidation}) => {
+export const PostForm: React.FC<ICreatePostFormProps> = ({post, setPost, titleValid, contentValid}) => {
   return (
     <Form>
       <Form.Group className="mb-3" controlId="formPostTitle">
@@ -19,14 +20,10 @@ export const CreatePostForm: React.FC<ICreatePostFormProps> = ({post, setPost, p
           value={post.title}
           onChange={e => setPost({...post, title: e.target.value})}
           required 
-          isInvalid={post.title.length < 1 && !passedValidation}
-          isValid={post.title.length > 0}
+          isInvalid={!titleValid}
         />
         <Form.Control.Feedback type="invalid">
           Please enter a title
-        </Form.Control.Feedback>
-        <Form.Control.Feedback type="valid">
-          Looks good!
         </Form.Control.Feedback>
       </Form.Group>
       <Form.Group className="mb-3" controlId="formPostContent">
@@ -39,14 +36,10 @@ export const CreatePostForm: React.FC<ICreatePostFormProps> = ({post, setPost, p
           value={post.content}
           onChange={e => setPost({...post, content: e.target.value})}
           required
-          isInvalid={post.content.length < 1 && !passedValidation}
-          isValid={post.content.length > 0}
+          isInvalid={!contentValid}
         />
         <Form.Control.Feedback type="invalid">
           Please enter a content
-        </Form.Control.Feedback>
-        <Form.Control.Feedback type="valid">
-          Looks good!
         </Form.Control.Feedback>
       </Form.Group>
     </Form>
