@@ -3,19 +3,25 @@ import {IPost} from './interfaces';
 import {PostsTable} from './components/PostsTable';
 import {Container} from './components/Container';
 import {Menu} from './components/Menu';
-import {getAllPosts} from './backend/PostService';
+import {CreatePostModal} from './components/CreatePostModal';
+import {PostService} from './backend/PostService';
 
 export const App: React.FC = () => {
   const [posts, setPosts] = useState<IPost[]>([]);
 
+  const [modalShown, setModalShown] = useState(false);
+  const showModal = () => setModalShown(true);
+  const hideModal = () => setModalShown(false);
+
   const fetchPosts = () => {
-    getAllPosts()
+    PostService.getAllPosts()
       .then(postsFromServer => setPosts(postsFromServer));
   };
-  
+
   return (
     <Container>
-      <Menu onGetPostsClick={fetchPosts} onCreatePostClick={() => {}}/>
+      <Menu onGetPostsClick={fetchPosts} onCreatePostClick={showModal}/>
+      <CreatePostModal shown={modalShown} onHide={hideModal} onCreate={fetchPosts}/>
       <PostsTable posts={posts}/>
     </Container>
   );
