@@ -20,7 +20,7 @@ const endpoints: IEndpoints = {
 };
 
 const endpointsFor = (environment: Environment): IEndpoints => {
-  const url = environment == 'Development' ? API_URL_DEVELOPMENT : API_URL_PRODUCTION;
+  const url = environment === 'Development' ? API_URL_DEVELOPMENT : API_URL_PRODUCTION;
 
   return {
     getAllPosts: `${url}/${endpoints.getAllPosts}`,
