@@ -37,13 +37,15 @@ export const App: React.FC = () => {
       <CreatePostModal
         shown={createModalShown}
         onHide={hideCreateModal}
-        onCreate={fetchPosts}/>
+        onCreate={fetchPosts}
+      />
       <UpdatePostModal
         post={postToUpdate}
         setPost={setPostToUpdate}
         shown={updateModalShown}
         onHide={hideUpdateModal}
-        onUpdate={fetchPosts}/>
+        onUpdate={fetchPosts}
+      />
       <PostsTable
         posts={posts}
         onUpdatePost={selectPostToUpdate}
